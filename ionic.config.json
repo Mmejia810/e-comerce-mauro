@@ -1,0 +1,7 @@
+{
+  "name": "e-commerce-mauro",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
