@@ -1,0 +1,8 @@
+<ion-item *ngIf="categorias.length > 0">
+  <ion-label>Categorías</ion-label>
+  <ion-select (ionChange)="onCategoryChange($event)" [value]="'todo'">
+    <ion-select-option *ngFor="let categoria of categorias" [value]="categoria">
+      {{ categoria | titlecase }}
+    </ion-select-option>
+  </ion-select>
+</ion-item>

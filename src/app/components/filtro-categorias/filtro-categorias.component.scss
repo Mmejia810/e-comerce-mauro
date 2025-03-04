@@ -1,0 +1,84 @@
+:host {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+/* Estilización moderna del item */
+ion-item {
+  --background: var(--ion-color-light);
+  --border-radius: 12px;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Sombras más sutiles */
+  border: 1px solid var(--ion-color-medium);
+  margin: 0 10px;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+ion-item:hover {
+  transform: scale(1.02); /* Pequeño efecto de escala al pasar el mouse */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos del texto */
+ion-label {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: var(--ion-color-primary);
+}
+
+/* Personalización del select */
+ion-select {
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --color: var(--ion-color-dark);
+  --placeholder-color: var(--ion-color-medium);
+  --border-radius: 8px;
+  font-weight: 500;
+  background: var(--ion-color-light);
+  transition: all 0.3s ease;
+}
+
+/* Efecto al interactuar con el select */
+ion-select:focus {
+  transform: scale(1.03);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Ícono del select */
+ion-select::part(icon) {
+  color: var(--ion-color-primary);
+  transition: transform 0.3s ease;
+}
+
+/* Rotación del icono cuando está abierto */
+ion-select[aria-expanded="true"]::part(icon) {
+  transform: rotate(180deg);
+}
+
+/* Estilos para las opciones */
+ion-select-option {
+  padding: 12px;
+  font-size: 1rem;
+  color: var(--ion-color-dark);
+  transition: background 0.3s ease;
+}
+
+/* Efecto hover en las opciones */
+ion-select-option:hover {
+  background: var(--ion-color-primary);
+  color: white;
+  font-weight: bold;
+}
+
+/* Responsividad */
+@media (max-width: 400px) {
+  ion-label {
+    font-size: 1rem;
+  }
+
+  ion-item {
+    --padding-start: 8px;
+    --padding-end: 8px;
+  }
+}

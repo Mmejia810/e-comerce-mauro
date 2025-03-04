@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Historial de Compras</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="danger" (click)="vaciarHistorial()" *ngIf="compras.length > 0">
+        <ion-icon name="trash-outline"></ion-icon> Vaciar Historial
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding historial-content">
+  <!--  Spinner animado mientras carga -->
+  <div class="spinner-container" *ngIf="cargando">
+    <ion-spinner name="crescent"></ion-spinner>
+  </div>
+
+  <!--  Lista de compras con animación -->
+  <ion-list *ngIf="compras && compras.length > 0; else noCompras" class="fade-in">
+    <ion-item *ngFor="let compra of compras" class="compra-item" (click)="verDetalleCompra(compra)" button>
+      <ion-label>
+        <h3>Fecha: {{ compra.date ? (compra.date | date:'short') : 'Sin fecha' }}</h3>
+        <p>Total: <strong>{{ compra.total ? ('$' + (compra.total | number:'1.2-2')) : 'No disponible' }}</strong></p>
+        <p>Comprador: {{ compra.buyer?.firstName || 'Desconocido' }} {{ compra.buyer?.lastName || '' }}</p>
+      </ion-label>
+      <ion-button color="danger" fill="clear" (click)="eliminarCompra(compra.id); $event.stopPropagation();">
+        <ion-icon name="trash-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <!-- Mensaje cuando no hay compras -->
+  <ng-template #noCompras>
+    <div class="no-compras fade-in">
+      <ion-icon name="cart-outline"></ion-icon>
+      <h3>No tienes compras aún.</h3>
+    </div>
+  </ng-template>
+
+  <!-- Botón para volver a Home -->
+  <div class="boton-home">
+    <ion-button expand="full" color="primary" (click)="irAHome()">
+      <ion-icon slot="start" name="home-outline"></ion-icon>
+      Volver a Inicio
+    </ion-button>
+  </div>
+</ion-content>

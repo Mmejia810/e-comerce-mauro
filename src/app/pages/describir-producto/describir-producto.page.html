@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalles del Producto</ion-title>
+    <div slot="end">
+      <ion-button fill="clear" (click)="goToCartPage()" class="cart-button">
+        <div class="cart-container">
+          <i class="fa-solid fa-cart-shopping cart-icon"></i>
+          <ion-badge *ngIf="cartItemCount > 0" class="cart-badge">{{ cartItemCount }}</ion-badge>
+        </div>
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="product-container ion-text-center" *ngIf="producto">
+    <div class="product-img-container">
+      <img [src]="producto.image" alt="{{ producto.title }}" class="product-img" />
+    </div>
+
+    <h2 class="product-title">{{ producto.title }}</h2>
+    <p class="product-id"><strong>ID:</strong> {{ producto.id }}</p>
+    <p class="product-category"><strong>Categoría:</strong> {{ producto.category }}</p>
+    <div class="product-rating" *ngIf="producto?.rating">
+      <span *ngFor="let star of estrellas" [ngClass]="{ 'filled-star': star, 'empty-star': !star }">★</span>
+      <span class="rating-text">{{ producto.rating.rate }} / 5 ({{ producto.rating.count }} valoraciones)</span>
+    </div>
+
+    <div class="reviews-container" *ngIf="reviews.length > 0">
+      <h3>Reseñas</h3>
+      <div *ngFor="let review of reviews" class="review">
+        <p class="review-user">{{ review.user }}</p>
+        <p class="review-comment">{{ review.comment }}</p>
+      </div>
+    </div>
+    <p class="product-price"><strong>Precio:</strong> \${{ producto.price }}</p>
+    <p class="product-description"><strong>Descripción:</strong> {{ producto.description }}</p>
+
+    <ion-button expand="full" color="success" (click)="addToCart()">➕ Añadir al Carrito</ion-button>
+    <ion-button expand="full" color="danger" (click)="buyNow(producto, $event)">⚡ Comprar Ahora</ion-button>
+
+
+
+    <a class="back-button" (click)="goBack()">← Volver a la tienda</a>
+  </div>
+</ion-content>

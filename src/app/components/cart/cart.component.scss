@@ -1,0 +1,41 @@
+/* Texto vacío con efecto fade-in */
+.empty-text {
+  text-align: center;
+  font-size: 1.3rem;
+  color: #6c757d; /* Color gris más moderno */
+  margin-top: 20px;
+  font-weight: bold;
+  opacity: 0;
+  animation: fadeIn 0.8s ease-in-out forwards;
+}
+
+/* Footer del carrito con diseño más moderno */
+.cart-footer {
+  text-align: center;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  margin-top: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Efecto de escala al pasar el mouse (solo en escritorio) */
+@media (min-width: 768px) {
+  .cart-footer:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* Animación de fade-in */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

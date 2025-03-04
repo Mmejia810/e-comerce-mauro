@@ -1,0 +1,118 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Finalizar Compra</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <h2>Información del Comprador</h2>
+  <form [formGroup]="checkoutForm" (ngSubmit)="submitOrder()">
+    <ion-item>
+      <ion-label position="floating">Nombre</ion-label>
+      <ion-input formControlName="firstName" required></ion-input>
+    </ion-item>
+    <div *ngIf="checkoutForm.controls['firstName'].invalid && checkoutForm.controls['firstName'].touched">
+      <ion-text color="danger">
+        <p>El nombre es obligatorio.</p>
+      </ion-text>
+    </div>
+
+    <ion-item>
+      <ion-label position="floating">Apellidos</ion-label>
+      <ion-input formControlName="lastName" required></ion-input>
+    </ion-item>
+    <div *ngIf="checkoutForm.controls['lastName'].invalid && checkoutForm.controls['lastName'].touched">
+      <ion-text color="danger">
+        <p>Los apellidos son obligatorios.</p>
+      </ion-text>
+    </div>
+
+    <ion-item>
+      <ion-label position="floating">País</ion-label>
+      <ion-select formControlName="country" (ionChange)="onCountryChange($event)" required>
+        <ion-select-option *ngFor="let country of countries" [value]="country.name">{{ country.name }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <div *ngIf="checkoutForm.controls['country'].invalid && checkoutForm.controls['country'].touched">
+      <ion-text color="danger">
+        <p>Debe seleccionar un país.</p>
+      </ion-text>
+    </div>
+
+    <ion-item>
+      <ion-label position="floating">Ciudad</ion-label>
+      <ion-select formControlName="city" required>
+        <ion-select-option *ngFor="let city of availableCities" [value]="city">{{ city }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <div *ngIf="checkoutForm.controls['city'].invalid && checkoutForm.controls['city'].touched">
+      <ion-text color="danger">
+        <p>Debe seleccionar una ciudad.</p>
+      </ion-text>
+    </div>
+
+    <ion-item>
+      <ion-label position="floating">Dirección</ion-label>
+      <ion-input formControlName="address" required></ion-input>
+    </ion-item>
+    <div *ngIf="checkoutForm.controls['address'].invalid && checkoutForm.controls['address'].touched">
+      <ion-text color="danger">
+        <p>La dirección es obligatoria.</p>
+      </ion-text>
+    </div>
+
+    <h2>Método de Pago</h2>
+    <ion-item>
+      <ion-label>Seleccione un método</ion-label>
+      <ion-select formControlName="paymentMethod" (ionChange)="onPaymentChange()" required>
+        <ion-select-option value="creditCard">Tarjeta de Crédito</ion-select-option>
+        <ion-select-option value="bankTransfer">Transferencia Bancaria</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Formulario para Tarjeta de Crédito -->
+    <div *ngIf="paymentMethod === 'creditCard'">
+      <ion-item>
+        <ion-label position="floating">Número de Tarjeta</ion-label>
+        <ion-input formControlName="cardNumber" type="text" maxlength="16" inputmode="numeric" required></ion-input>
+      </ion-item>
+      <div *ngIf="checkoutForm.controls['cardNumber'].invalid && checkoutForm.controls['cardNumber'].touched">
+        <ion-text color="danger">
+          <p>El número de tarjeta debe ser numérico y de 16 dígitos.</p>
+        </ion-text>
+      </div>
+
+      <ion-item>
+        <ion-label position="floating">Fecha de Expiración</ion-label>
+        <ion-input formControlName="expiryDate" type="month" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">CVV</ion-label>
+        <ion-input formControlName="cvv" type="password" maxlength="4" inputmode="numeric" required></ion-input>
+      </ion-item>
+    </div>
+
+    <!-- Formulario para Transferencia Bancaria -->
+    <div *ngIf="paymentMethod === 'bankTransfer'">
+      <ion-item>
+        <ion-label position="floating">Banco</ion-label>
+        <ion-select formControlName="bankName" required>
+          <ion-select-option *ngFor="let bank of availableBanks" [value]="bank">{{ bank }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Número de Cuenta</ion-label>
+        <ion-input formControlName="accountNumber" type="text" inputmode="numeric"></ion-input>
+      </ion-item>
+    </div>
+
+    <ion-button expand="full" type="submit" [disabled]="checkoutForm.invalid">Confirmar Compra</ion-button>
+  </form>
+</ion-content>

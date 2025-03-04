@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Historial de Compras</ion-title>
+    <ion-buttons slot="end">
+      <!-- Botón para vaciar historial -->
+      <ion-button color="danger" (click)="vaciarHistorial()">
+        <ion-icon name="trash-outline"></ion-icon>
+      </ion-button>
+
+      <!-- Botón para cerrar -->
+      <ion-button (click)="cerrar()" class="close-btn">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding historial-content">
+  <!-- Spinner animado mientras carga -->
+  <div class="spinner-container" *ngIf="cargando">
+    <ion-spinner name="crescent"></ion-spinner>
+  </div>
+
+  <!-- Lista de compras -->
+  <ion-list *ngIf="compras && compras.length > 0; else noCompras" class="fade-in">
+    <ion-item *ngFor="let compra of compras" class="compra-item" (click)="verDetalleCompra(compra)">
+      <ion-label>
+        <h3>📅 Fecha: {{ compra.date ? (compra.date | date:'short') : 'Sin fecha' }}</h3>
+        <p>💰 Total: <strong>{{ compra.total ? ('$' + (compra.total | number:'1.2-2')) : 'No disponible' }}</strong></p>
+        <p>👤 Comprador: {{ compra.buyer?.firstName || 'Desconocido' }} {{ compra.buyer?.lastName || '' }}</p>
+
+        <!-- Mostrar productos de la compra -->
+        <ion-list *ngIf="compra.items && compra.items.length > 0" class="productos-list">
+          <ion-item *ngFor="let item of compra.items" class="producto-item">
+            <ion-thumbnail slot="start" class="producto-imagen">
+              <img [src]="item.image" alt="Producto">
+            </ion-thumbnail>
+            <ion-label>
+              <h3>{{ item.title }}</h3>
+              <p>📦 Cantidad: {{ item.quantity }}</p>
+              <p>💲 Precio: {{ item.price | currency }}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- Mensaje cuando no hay compras -->
+  <ng-template #noCompras>
+    <div class="no-compras fade-in">
+      <ion-icon name="cart-outline"></ion-icon>
+      <h3>No tienes compras aún.</h3>
+    </div>
+  </ng-template>
+</ion-content>

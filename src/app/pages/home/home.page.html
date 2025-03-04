@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="left-title">Productos</ion-title>
+    <div slot="end">
+      <ion-button fill="clear" (click)="goToCartPage()" class="cart-button">
+        <div class="cart-container">
+          <i class="fa-solid fa-cart-shopping cart-icon"></i>
+          <ion-badge *ngIf="cartItemCount > 0" class="cart-badge">{{ cartItemCount }}</ion-badge>
+        </div>
+      </ion-button>
+
+      <!-- Icono del historial de compras -->
+      <ion-button class="history-button" (click)="verHistorial()">
+        <ion-icon slot="icon-only" name="receipt-outline" class="history-icon"></ion-icon>
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="glass-content ion-padding">
+  <app-buscador (searchEvent)="filterProducts($event)"></app-buscador>
+
+  <app-filtro-categorias
+    [categorias]="categorias"
+    (categoryEvent)="filterByCategory($event)">
+  </app-filtro-categorias>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" size-md="6" size-lg="4" *ngFor="let product of filteredProducts">
+        <ion-card (click)="goToProductDetails(product.id)">
+          <ion-img [src]="product.image" alt="{{ product.title }}" class="product-img"></ion-img>
+          <ion-card-header>
+            <ion-card-title>{{ product.title }}</ion-card-title>
+            <ion-card-subtitle>\${{ product.price }}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <p>{{ product.description | slice:0:100 }}...</p>
+          </ion-card-content>
+          <ion-button expand="full" color="success" (click)="addToCart(product, $event)">
+            🛒 Añadir al Carrito
+          </ion-button>
+          <ion-button expand="full" color="danger" (click)="buyNow(product, $event)">
+            ⚡ Comprar Ahora
+          </ion-button>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-infinite-scroll threshold="20%" position="bottom" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="crescent" loadingText="Cargando más productos..."></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

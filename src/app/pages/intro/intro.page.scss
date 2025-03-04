@@ -1,0 +1,77 @@
+/* === CONTENEDOR PRINCIPAL DEL LOADER === */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh; /* Ocupa casi toda la pantalla */
+  position: relative;
+}
+
+/* === IMAGEN DEL LOADER === */
+.loading-image {
+  max-width: 50%;
+  max-height: 50vh;
+  filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.2));
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* === NUEVO LOADER CON EFECTO NEÓN Y ANIMACIÓN MEJORADA === */
+.loader {
+  --s: 40px;
+  height: calc(var(--s) * 0.9);
+  width: calc(var(--s) * 5);
+
+  --v1: transparent, rgba(0, 0, 0, 0.8) 0.5deg 108deg, rgba(0, 0, 0, 0) 109deg;
+  --v2: transparent, rgba(0, 0, 0, 0.8) 0.5deg 36deg, rgba(0, 0, 0, 0) 37deg;
+
+  -webkit-mask:
+    conic-gradient(from 54deg at calc(var(--s) * 0.68) calc(var(--s) * 0.57), var(--v1)),
+    conic-gradient(from 90deg at calc(var(--s) * 0.02) calc(var(--s) * 0.35), var(--v2)),
+    conic-gradient(from 126deg at calc(var(--s) * 0.5) calc(var(--s) * 0.7), var(--v1)),
+    conic-gradient(from 162deg at calc(var(--s) * 0.5) 0, var(--v2));
+
+  -webkit-mask-size: var(--s) var(--s);
+  -webkit-mask-composite: xor, destination-over;
+  mask-composite: exclude, add;
+  -webkit-mask-repeat: repeat-x;
+
+  background: linear-gradient(45deg, #ff8c00, #ffb940, #ffd700, #ff8c00);
+  background-size: 300% 100%;
+  animation: loaderAnim 2s infinite linear, glow 1.5s infinite alternate;
+
+  position: absolute;
+  bottom: 5vh;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 8px;
+  box-shadow: 0px 4px 15px rgba(255, 184, 64, 0.5);
+}
+
+/* === ANIMACIÓN DE CARGA CON EFECTO DE BRILLO === */
+@keyframes loaderAnim {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* === EFECTO GLOW PARA MÁS MODERNIDAD === */
+@keyframes glow {
+  from {
+    box-shadow: 0px 4px 15px rgba(255, 184, 64, 0.3);
+  }
+  to {
+    box-shadow: 0px 4px 30px rgba(255, 184, 64, 0.6);
+  }
+}
+
+/* === ANIMACIÓN DE ENTRADA SUAVE === */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
